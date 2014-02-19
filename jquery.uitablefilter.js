@@ -16,17 +16,19 @@
  * arguments:
  *   jQuery object containing table rows
  *   phrase to search for
- *   optional arguments:
+ *   options:
  *     array of columns to limit search too (the column title in the table header)
  *     ifHidden - callback to execute if one or more elements was hidden
  */
 (function($) {
-  $.uiTableFilter = function(jq, phrase, column, ifHidden){
+  $.uiTableFilter = function(jq, phrase, options){
     var new_hidden = false;
     if( this.last_phrase === phrase ) return false;
 
     var phrase_length = phrase.length;
     var words = phrase.toLowerCase().split(" ");
+    var column = options.column;
+    var ifHidden = options.ifHidden;
 
     // these function pointers may change
     var matches = function(elem) { elem.show() }
