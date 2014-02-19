@@ -17,7 +17,8 @@
  *   jQuery object containing table rows
  *   phrase to search for
  *   options:
- *     array of columns to limit search too (the column title in the table header)
+ *     column - array of columns to limit search too (the column title in the table header)
+ *     column_numbers - array of column numbers to limit search
  *     ifHidden - callback to execute if one or more elements was hidden
  */
 (function($) {
@@ -28,6 +29,7 @@
     var phrase_length = phrase.length;
     var words = phrase.toLowerCase().split(" ");
     var column = options.column;
+    var column_numbers = options.column_numbers;
     var ifHidden = options.ifHidden;
 
     // these function pointers may change
@@ -35,11 +37,16 @@
     var noMatch = function(elem) { elem.hide(); new_hidden = true }
     var getText = function(elem) { return elem.text() }
 
-    if( column ) 
+    if( column || column_numbers) 
     {
       if (!$.isArray(column))
       {
         column = new Array(column);
+      }
+
+      if (!$.isArray(column_numbers))
+      {
+        column = new Array(column_numbers);
       }
 	  
       var index = new Array(); 
@@ -56,13 +63,17 @@
           }
 
       });
+
+      index.concat(column_numbers)
          
       getText = function(elem) {
           var selector = "";
           for (var i = 0; i < index.length; i++)
           {
-              if (i != 0) {selector += ",";}
-              selector += "td:eq(" + index[i] + ")";
+              if (index[i] > 0){
+                if (i > 0) {selector += ",";}
+                selector += "td:eq(" + index[i] + ")";
+              }
           }
           return $(elem.find((selector))).text();
       }
