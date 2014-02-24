@@ -46,7 +46,7 @@
 
       if (!$.isArray(column_numbers))
       {
-        column = new Array(column_numbers);
+        column_numbers = new Array(column_numbers);
       }
 	  
       var index = new Array(); 
