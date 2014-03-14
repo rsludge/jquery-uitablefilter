@@ -70,7 +70,7 @@
           var selector = "";
           for (var i = 0; i < index.length; i++)
           {
-              if (index[i] > 0){
+              if (index[i] >= 0){
                 if (i > 0) {selector += ",";}
                 selector += "td:eq(" + index[i] + ")";
               }
